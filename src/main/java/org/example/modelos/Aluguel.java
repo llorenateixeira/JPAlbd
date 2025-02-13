@@ -1,10 +1,7 @@
 package org.example.modelos;
 
-
 import jakarta.persistence.*;
-
-import java.sql.Date;
-
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "ALUGUEIS")
@@ -15,22 +12,26 @@ public class Aluguel {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "ID_LOCACAO")
-    private org.example.modelos.Locacao locacao;
+    @JoinColumn(name = "ID_LOCACAO", nullable = false)
+    private Locacao locacao;
 
-    @Column(name = "DATA_VENCIMENTO")
-    private Date dataVencimento;
+    @Column(name = "DATA_VENCIMENTO", nullable = false)
+    private LocalDate dataVencimento;
 
     @Column(name = "VALOR_PAGO")
     private Double valorPago;
 
     @Column(name = "DATA_PAGAMENTO")
-    private Date dataPagamento;
+    private LocalDate dataPagamento;
 
     @Column(name = "OBS")
     private String obs;
 
-    // Getters e setters
+    // 🔹 Construtor padrão
+    public Aluguel() {
+    }
+
+    // 🔹 Getters e Setters
 
     public Integer getId() {
         return id;
@@ -48,6 +49,14 @@ public class Aluguel {
         this.locacao = locacao;
     }
 
+    public LocalDate getDataVencimento() {
+        return dataVencimento;
+    }
+
+    public void setDataVencimento(LocalDate dataVencimento) {
+        this.dataVencimento = dataVencimento;
+    }
+
     public Double getValorPago() {
         return valorPago;
     }
@@ -56,11 +65,23 @@ public class Aluguel {
         this.valorPago = valorPago;
     }
 
+    public LocalDate getDataPagamento() {
+        return dataPagamento;
+    }
+
+    public void setDataPagamento(LocalDate dataPagamento) {
+        this.dataPagamento = dataPagamento;
+    }
+
     public String getObs() {
         return obs;
     }
 
     public void setObs(String obs) {
         this.obs = obs;
+    }
+
+    public Integer getLocacaoId() {
+        return (locacao != null) ? locacao.getId() : null;
     }
 }

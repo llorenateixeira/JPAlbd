@@ -1,9 +1,6 @@
 package org.example.modelos;
 
-
 import jakarta.persistence.*;
-
-
 
 @Entity
 @Table(name = "IMOVEIS")
@@ -14,20 +11,16 @@ public class Imovel {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "ID_PROPRIETARIO")
+    @JoinColumn(name = "ID_PROPRIETARIO", nullable = false)
     private Cliente proprietario;
 
-    @ManyToOne
-    @JoinColumn(name = "ID_TIPO_IMOVEL")
-    private TipoImovel tipoImovel;
-
-    @Column(name = "LOGRADOURO")
+    @Column(name = "LOGRADOURO", nullable = false)
     private String logradouro;
 
-    @Column(name = "BAIRRO")
+    @Column(name = "BAIRRO", nullable = false)
     private String bairro;
 
-    @Column(name = "CEP")
+    @Column(name = "CEP", nullable = false)
     private String cep;
 
     @Column(name = "METRAGEM")
@@ -45,14 +38,13 @@ public class Imovel {
     @Column(name = "VAGAS_GARAGEM")
     private Integer vagasGaragem;
 
-    @Column(name = "VALOR_ALUGEL_SUGERIDO")
+    @Column(name = "VALOR_ALUGUEL_SUGERIDO", nullable = false)
     private Double valorAluguelSugerido;
 
-    @Column(name = "OBS")
-    private String obs;
+    @Column(name = "STATUS", nullable = false)
+    private String status = "DISPONIVEL"; // Valor padrão
 
-    // Getters e setters
-
+    // 🔹 Getters e Setters
     public Integer getId() {
         return id;
     }
@@ -67,14 +59,6 @@ public class Imovel {
 
     public void setProprietario(Cliente proprietario) {
         this.proprietario = proprietario;
-    }
-
-    public TipoImovel getTipoImovel() {
-        return tipoImovel;
-    }
-
-    public void setTipoImovel(TipoImovel tipoImovel) {
-        this.tipoImovel = tipoImovel;
     }
 
     public String getLogradouro() {
@@ -149,11 +133,33 @@ public class Imovel {
         this.valorAluguelSugerido = valorAluguelSugerido;
     }
 
-    public String getObs() {
-        return obs;
+    public String getStatus() {
+        return status;
     }
 
-    public void setObs(String obs) {
-        this.obs = obs;
+    public void setStatus(String status) {
+        if ("ALUGADO".equalsIgnoreCase(status) || "DISPONIVEL".equalsIgnoreCase(status)) {
+            this.status = status;
+        } else {
+            throw new IllegalArgumentException("Status inválido. Use 'ALUGADO' ou 'DISPONIVEL'.");
+        }
+    }
+
+    // 🔹 Método para ALUGAR o imóvel
+    public void alugar() {
+        if ("DISPONIVEL".equalsIgnoreCase(this.status)) {
+            this.status = "ALUGADO";
+        } else {
+            throw new IllegalStateException("Imóvel já está alugado!");
+        }
+    }
+
+    // 🔹 Método para LIBERAR o imóvel
+    public void liberar() {
+        if ("ALUGADO".equalsIgnoreCase(this.status)) {
+            this.status = "DISPONIVEL";
+        } else {
+            throw new IllegalStateException("O imóvel já está disponível!");
+        }
     }
 }

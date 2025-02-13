@@ -1,22 +1,19 @@
 package org.example.modelos;
 
 import jakarta.persistence.*;
-
-import java.sql.Date;
-
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "CLIENTES")
 public class Cliente {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "NOME")
+    @Column(name = "NOME", nullable = false)
     private String nome;
 
-    @Column(name = "CPF")
+    @Column(name = "CPF", nullable = false, unique = true)
     private String cpf;
 
     @Column(name = "TELEFONE")
@@ -26,53 +23,24 @@ public class Cliente {
     private String email;
 
     @Column(name = "DT_NASCIMENTO")
-    private Date dataNascimento;
+    private LocalDate dataNascimento;  // 🔹 Melhor usar LocalDate
 
-    public Date getDataNascimento() {
-        return dataNascimento;
-    }
+    // Getters e Setters
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
-    public void setDataNascimento(Date dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
 
-    public Integer getId() {
-        return id;
-    }
+    public String getCpf() { return cpf; }
+    public void setCpf(String cpf) { this.cpf = cpf; }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    public String getTelefone() { return telefone; }
+    public void setTelefone(String telefone) { this.telefone = telefone; }
 
-    public String getNome() {
-        return nome;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public LocalDate getDataNascimento() { return dataNascimento; }
+    public void setDataNascimento(LocalDate dataNascimento) { this.dataNascimento = dataNascimento; }
 }

@@ -1,10 +1,8 @@
 package org.example.repositorio;
 
-import org.example.modelos.Locacao;
-
-import jakarta.persistence.*;
-
+import jakarta.persistence.EntityManager;
 import java.util.List;
+import org.example.modelos.Locacao;
 
 public class LocacaoRepository {
     private final EntityManager manager;
@@ -20,7 +18,7 @@ public class LocacaoRepository {
     }
 
     public List<Locacao> buscaPorInquilino(Integer idInquilino) {
-        return this.manager.createQuery("from Locacao where id_inquilino = :idInquilino", Locacao.class)
+        return this.manager.createQuery("from Locacao where inquilino.id = :idInquilino", Locacao.class)
                 .setParameter("idInquilino", idInquilino)
                 .getResultList();
     }
@@ -31,5 +29,12 @@ public class LocacaoRepository {
 
     public void remove(Locacao locacao) {
         daoGenerico.remove(locacao);
+    }
+
+    /**
+     * Método para buscar todas as locações cadastradas.
+     */
+    public List<Locacao> buscaTodas() {
+        return this.manager.createQuery("from Locacao", Locacao.class).getResultList();
     }
 }

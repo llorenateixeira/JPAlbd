@@ -1,10 +1,7 @@
 package org.example.modelos;
 
-
 import jakarta.persistence.*;
-
-import java.sql.Date;
-
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "LOCACAO")
@@ -15,32 +12,30 @@ public class Locacao {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "ID_IMOVEL")
+    @JoinColumn(name = "ID_IMOVEL", nullable = false)
     private Imovel imovel;
 
     @ManyToOne
-    @JoinColumn(name = "ID_INQUILINO")
+    @JoinColumn(name = "ID_INQUILINO", nullable = false)
     private Cliente inquilino;
 
-    @Column(name = "VALOR_ALUGUEL")
+    @Column(name = "VALOR_ALUGUEL", nullable = false)
     private Double valorAluguel;
 
-    @Column(name = "PERCENTUAL_MULTA")
-    private Double percentualMulta;
-
-    @Column(name = "DIA_VENCIMENTO")
+    @Column(name = "DIA_VENCIMENTO", nullable = false)
     private Integer diaVencimento;
 
-    @Column(name = "DATA_INICIO")
-    private Date dataInicio;
+    @Column(name = "DATA_INICIO", nullable = false)
+    private LocalDate dataInicio;
 
-    @Column(name = "DATA_FIM")
-    private Date dataFim;
+    @Column(name = "DATA_FIM", nullable = false)
+    private LocalDate dataFim;
 
-    @Column(name = "ATIVO")
-    private Boolean ativo;
+    // 🔹 Construtor padrão
+    public Locacao() {
+    }
 
-    // Getters e setters
+    // 🔹 Getters e Setters
 
     public Integer getId() {
         return id;
@@ -74,14 +69,6 @@ public class Locacao {
         this.valorAluguel = valorAluguel;
     }
 
-    public Double getPercentualMulta() {
-        return percentualMulta;
-    }
-
-    public void setPercentualMulta(Double percentualMulta) {
-        this.percentualMulta = percentualMulta;
-    }
-
     public Integer getDiaVencimento() {
         return diaVencimento;
     }
@@ -90,11 +77,30 @@ public class Locacao {
         this.diaVencimento = diaVencimento;
     }
 
-    public Boolean getAtivo() {
-        return ativo;
+    public LocalDate getDataInicio() {
+        return dataInicio;
     }
 
-    public void setAtivo(Boolean ativo) {
-        this.ativo = ativo;
+    public void setDataInicio(LocalDate dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+
+    public LocalDate getDataFim() {
+        return dataFim;
+    }
+
+    public void setDataFim(LocalDate dataFim) {
+        this.dataFim = dataFim;
+    }
+
+    public Integer getIdImovel() {
+        return (imovel != null) ? imovel.getId() : null;
+    }
+
+    public Integer getIdInquilino() {
+        return (inquilino != null) ? inquilino.getId() : null;
+    }
+
+    public void setAtivo(boolean b) {
     }
 }
